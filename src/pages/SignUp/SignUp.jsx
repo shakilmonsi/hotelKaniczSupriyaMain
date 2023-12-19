@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
+import SocailLogin from "../SocailLogin/SocailLogin";
 
 const SignUp = () => {
 
@@ -19,6 +20,20 @@ const SignUp = () => {
                 console.log(loggedUser);
                 updateUserProfile(data.name, data.photoURL)
                     .then(() => {
+                        const  saveUser = {name: data.name, email:data.email}
+                        fetch ("http://localhost:5000/users",{
+                            method: "POSt",
+                            headers: {
+                                'content-type':"application/json"
+                            },
+                            body: JSON.stringify(saveUser)
+                        })
+                   
+                        .then(res=>res.json())
+                        .then(data=> {
+                            if(data.insertedId){
+
+                                
                         console.log('user profile info updated')
                         reset();
                         Swal.fire({
@@ -29,7 +44,8 @@ const SignUp = () => {
                             timer: 1500
                         });
                         navigate('/');
-
+                            }
+                        })
                     })
                     .catch(error => console.log(error))
             })
@@ -92,6 +108,8 @@ const SignUp = () => {
                             </div>
                         </form>
                         <p><small>Already have an account <Link to="/login">Login</Link></small></p>
+                    
+                          
                     </div>
                 </div>
             </div>
