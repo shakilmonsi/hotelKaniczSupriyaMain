@@ -89,7 +89,7 @@ const SignUp = () => {
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input type="password"  {...register("password", {
+                                <input type="text"  {...register("password", {
                                     required: true,
                                     minLength: 6,
                                     maxLength: 20,
